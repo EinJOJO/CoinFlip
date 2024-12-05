@@ -1,0 +1,11 @@
+name: Coinflip
+main: de.einjojo.coinflip.CoinFlipPlugin
+version: ${version}
+author: EinJojo
+description: Coinflip-Game
+api-version: 1.21
+website: https://einjojo.it
+softdepend:
+  - PlaceholderAPI
+  - vault
+
