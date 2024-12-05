@@ -8,4 +8,11 @@ website: https://einjojo.it
 softdepend:
   - PlaceholderAPI
   - vault
+commands:
+  coinflip:
+    aliases: [ cf ]
+    description: Coinflip Command
+libraries: [ ${configurate} ]
+
+
 

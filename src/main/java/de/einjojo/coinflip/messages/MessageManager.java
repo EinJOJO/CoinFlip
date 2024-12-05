@@ -1,6 +1,5 @@
 package de.einjojo.coinflip.messages;
 
-import de.einjojo.coinflip.messages.MessagesConfig;
 import de.einjojo.coinflip.CoinFlipPlugin;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -38,47 +37,51 @@ public class MessageManager {
      * Loads the messages for the specified language.
      *
      * @param language language code
-     * @return a future that completes when the messages are loaded. The future returns true if the messages were loaded successfully, false otherwise.
+     * @return true if the messages were loaded successfully, false otherwise.
      */
-    public CompletableFuture<Boolean> loadMessages(String language) {
-        CompletableFuture<Boolean> future = new CompletableFuture<>();
-        plugin.getScheduler().runTaskAsynchronously(() -> {
-            // Load messages
-            messages = new ConcurrentHashMap<>();
-            messagesLists = new ConcurrentHashMap<>();
+    public boolean loadMessages(String language) {
+        // Load messages
+        messages = new ConcurrentHashMap<>();
+        messagesLists = new ConcurrentHashMap<>();
 
-            try {
-                var messagesConfig = new MessagesConfig(plugin, language);
-                for (MessageKey key : MessageKey.values()) {
-                    var defaultValueArray = key.getDefaultValueArray();
-                    if (defaultValueArray == null) {
-                        var read = messagesConfig.getString(key.getKey());
-                        if (read == null) {
-                            log.info("Message key {} added to messages file", key.getKey());
-                            messagesConfig.set(key.getKey(), key.getDefaultValue());
-                            messages.put(key.getKey(), key.getDefaultValue());
-                        } else {
-                            messages.put(key.getKey(), read);
-                        }
+        try {
+            var messagesConfig = new MessagesConfig(plugin, language);
+            for (MessageKey key : MessageKey.values()) {
+                var defaultValueArray = key.getDefaultValueArray();
+                if (defaultValueArray == null) {
+                    var read = messagesConfig.getString(key.getKey());
+                    if (read == null) {
+                        log.info("Message key {} added to messages file", key.getKey());
+                        messagesConfig.set(key.getKey(), key.getDefaultValue());
+                        messages.put(key.getKey(), key.getDefaultValue());
                     } else {
-                        var read = messagesConfig.getStringList(key.getKey());
-                        if (read.isEmpty()) {
-                            log.info("Message-List key {} added to messages file", key.getKey());
-                            messagesConfig.set(key.getKey(), defaultValueArray);
-                            messagesLists.put(key.getKey(), List.of(defaultValueArray));
-                        } else {
-                            messagesLists.put(key.getKey(), read);
-                        }
+                        messages.put(key.getKey(), read);
+                    }
+                } else {
+                    var read = messagesConfig.getStringList(key.getKey());
+                    if (read.isEmpty()) {
+                        log.info("Message-List key {} added to messages file", key.getKey());
+                        messagesConfig.set(key.getKey(), defaultValueArray);
+                        messagesLists.put(key.getKey(), List.of(defaultValueArray));
+                    } else {
+                        messagesLists.put(key.getKey(), read);
                     }
                 }
-                messagesConfig.save();
-                miniMessage = MiniMessage.builder().editTags(builder -> { //overwrite
-                    builder.tag("prefix", Tag.selfClosingInserting(getMessage(MessageKey.PREFIX)));
-                }).build();
-            } catch (Exception e) {
-                log.error("Failed to load messages", e);
-                future.completeExceptionally(e);
             }
+            messagesConfig.save();
+            miniMessage = MiniMessage.builder().editTags(builder -> { //overwrite
+                builder.tag("prefix", Tag.selfClosingInserting(getMessage(MessageKey.PREFIX)));
+            }).build();
+        } catch (Exception e) {
+            log.error("Failed to load messages", e);
+        }
+        return false;
+    }
+
+    public CompletableFuture<Boolean> loadMessagesAsync(String language) {
+        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        plugin.getScheduler().runTaskAsynchronously(() -> {
+            future.complete(loadMessages(language));
         });
         return future;
     }

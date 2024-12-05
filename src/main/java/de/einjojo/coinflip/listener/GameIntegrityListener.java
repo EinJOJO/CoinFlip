@@ -18,7 +18,7 @@ public class GameIntegrityListener implements Listener {
 
     @EventHandler
     public void abortRequestOnLeave(PlayerQuitEvent event) {
-        if (gameRequestManager.invalidateRequest(event.getPlayer().getUniqueId())) {
+        if (gameRequestManager.cancelRequest(event.getPlayer().getUniqueId())) {
             log.info("Invalidated request because requester has left the server");
         }
     }

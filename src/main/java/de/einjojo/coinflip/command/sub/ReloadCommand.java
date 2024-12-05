@@ -1,35 +1,31 @@
 package de.einjojo.coinflip.command.sub;
 
+
 import de.einjojo.coinflip.CoinFlipPlugin;
 import de.einjojo.coinflip.command.SubCommand;
-import de.einjojo.coinflip.messages.MessageKey;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
-public class RequestCancelCommand implements SubCommand {
-
+public class ReloadCommand implements SubCommand {
     private final CoinFlipPlugin plugin;
+    private CompletableFuture<Boolean> futureLock;
 
-    public RequestCancelCommand(CoinFlipPlugin plugin) {
+    public ReloadCommand(CoinFlipPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(MessageKey.COMMAND__REQUIRES_PLAYER.getComponent());
+        if (futureLock != null && !futureLock.isDone()) {
+            sender.sendRichMessage("<red>please wait until loading is done...");
             return;
         }
-        if (plugin.getGameRequestManager().cancelRequest(player.getUniqueId())) {
-            player.sendMessage(MessageKey.REQUEST__CANCELLED.getComponent());
-        } else {
-            player.sendMessage(MessageKey.NO_GAME_REQUEST.getComponent());
-        }
+        futureLock = plugin.getMessageManager().loadMessagesAsync("de");
     }
 
     @Override
@@ -39,12 +35,12 @@ public class RequestCancelCommand implements SubCommand {
 
     @Override
     public @NotNull String getCommand() {
-        return "cancel";
+        return "reload";
     }
 
     @Override
     public @Nullable Set<String> getAliases() {
-        return Set.of();
+        return Set.of("rl");
     }
 
     @Override
@@ -54,11 +50,11 @@ public class RequestCancelCommand implements SubCommand {
 
     @Override
     public @NotNull String getDescription() {
-        return "Breche deine Coinflip-Wette ab";
+        return "Lade die Config neu";
     }
 
     @Override
     public @Nullable String getPermission() {
-        return null;
+        return "coinflip.reload";
     }
 }

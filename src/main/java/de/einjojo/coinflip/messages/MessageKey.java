@@ -12,11 +12,28 @@ import java.util.Locale;
 @Getter
 public enum MessageKey {
     PREFIX("<gray>[<yellow>Coinflip</yellow>]</gray> "),
-    REQUEST__CANCELLED("<prefix>Deine Coinflip Anfrage wurde abgebrochen <reason>"),
-    /**
-     *
-     */
-    COMMAND__HELP_LINE("<prefix><yellow><command></yellow> <color:#fffda1><syntax></color> ");
+    REQUEST__CANCELLED("<prefix>Deine Coinflip Anfrage wurde abgebrochen."),
+    COMMAND__HELP_LINE("<prefix><yellow><command></yellow> <color:#fffda1><syntax></color> "),
+    COMMAND__REQUIRES_PLAYER("<prefix><red>Nur für Spieler"),
+    COMMAND__NO_PERMISSION("<prefix><red>Dazu hast du keine Rechte"),
+    INVALID_NUMBER("<prefix><red>Ungültige Zahl"),
+    REQUEST_GUI__NAME("Coinflip"),
+    REQUEST_GUI__PAGING_ITEM__CAN_PREVIOUS("<green>Vorherige Seite"),
+    REQUEST_GUI__PAGING_ITEM__NO_PREVIOUS("<red>Vorherige Seite"),
+    REQUEST_GUI__PAGING_ITEM__CAN_NEXT("<green>Nächste Seite"),
+    REQUEST_GUI__PAGING_ITEM__NO_NEXT("<red>Nächste Seite"),
+    REQUEST_GUI__REQUEST_ITEM__NAME("<player>"),
+    REQUEST_GUI__REQUEST_ITEM__LORE("<player>", "<amount>", "<bet>"),
+    REQUEST_GUI__REQUEST_ITEM__CLICK_SUGGESTION("[Linksklick] Mit <bet> die Münze werfen"),
+    NO_GAME_REQUEST("<prefix><red>Du hast keine Coinflip Wette inseriert."),
+    INPUT_CANCEL_SUBTITLE("<gray>Gebe <red>cancel</red> in den Chat ein, um abzubrechen."),
+    HEAD("<b><yellow>KOPF</yellow></b>"),
+    TAIL("<b><#ffffff>Zahl</#ffffff></b>"),
+    INPUT_ENTER_BET("Wettbetrag eingeben"),
+    INPUT_CANCELLED("<prefix>Abgebrochen"),
+    REQUEST__CREATED("<prefix>Du hast eine Wette erstellt und auf <bet> gesetzt"),
+    REQUEST__NOT_CREATED("<prefix><red>Deine Wette konnte nicht gestellt werden: <reason>");
+
 
     private final String defaultValue;
     @Nullable

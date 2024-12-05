@@ -9,13 +9,14 @@ guava = "33.3.1-jre"
 configurate = "4.1.2"
 vault = "1.7"
 universal-scheduler = "0.1.6"
+inventory-framework = "0.10.18"
 
 [libraries]
 vault = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
 cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud-paper" }
 cloud-minecraft-extras = { module = "org.incendo:cloud-minecraft-extras", version.ref = "cloud" }
 cloud-annotations = { module = "org.incendo:cloud-annotations", version.ref = "cloud-annotations" }
-
+inventoryframework = { module = "com.github.stefvanschie.inventoryframework:IF", version.ref = "inventory-framework" }
 paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }

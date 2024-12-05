@@ -38,4 +38,9 @@ public class StatsCommand implements SubCommand {
     public @Nullable String getPermission() {
         return null;
     }
+
+    @Override
+    public @NotNull String getSyntaxSuggestion() {
+        return "[Spieler]";
+    }
 }

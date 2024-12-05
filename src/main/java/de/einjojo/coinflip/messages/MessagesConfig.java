@@ -41,6 +41,9 @@ public class MessagesConfig {
 
     public void createNewMessageFile(File file) {
         try {
+            if (file.getParentFile().mkdirs()) {
+                log.info("Created folder");
+            }
             if (file.createNewFile()) {
                 log.info("Message File created: {}", file.getName());
             } else {

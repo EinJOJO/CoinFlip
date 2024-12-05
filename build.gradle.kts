@@ -34,14 +34,15 @@ repositories {
 dependencies {
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
-    implementation(libs.universal.scheduler)
 
     compileOnly(libs.paper.api)
+    implementation(libs.universal.scheduler)
+    implementation(libs.inventoryframework)
     compileOnly(libs.vault)
-
     compileOnly(libs.placeholderapi)
     // provided by spigot library loader
     compileOnly(libs.confgurate)
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
@@ -60,14 +61,13 @@ tasks {
     }
 
     shadowJar {
-        val shadePath = "de.einjojo.bitfarmer.shaded"
-        relocate("org.incendo.cloud", "$shadePath.incendocloud")
-        relocate("com.github.Anon8281.universalScheduler", "shadePath.universalScheduler")
-        relocate("mc.obliviate", "$shadePath.obliviateinv")
+        //val shadePath = "de.einjojo.coinflip.shaded"
+        //relocate("com.github.stefvanschie.inventoryframework", "$shadePath.inventoryframework")
+        //relocate("com.github.Anon8281.universalScheduler", "shadePath.universalScheduler")
     }
 
     runServer {
-        minecraftVersion("1.20.4")
+        minecraftVersion("1.21.3")
     }
 
     processResources {

@@ -17,11 +17,11 @@ import java.util.UUID;
 public class GameRequest {
     private final UUID requester;
     private final GameResult bet;
-    private final long money;
+    private final int money;
 
     private transient @Nullable GameRequestManager manager;
 
-    public GameRequest(UUID requester, GameResult bet, long money) {
+    public GameRequest(UUID requester, GameResult bet, int money) {
         this.requester = requester;
         this.bet = bet;
         this.money = money;
@@ -29,23 +29,18 @@ public class GameRequest {
 
 
     /**
-     * @param cancelReason Can be null if no message should be sent.
+     * Will refund the money
+     *
      * @return true if request has been cancelled successfully
      */
-    public boolean cancel(@Nullable String cancelReason) {
+    public boolean cancel() {
         if (manager == null) return false;
-        if (cancelReason != null && isRequesterOnline()) {
-            getRequesterPlayer().sendMessage(MessageKey.REQUEST__CANCELLED.getComponent(
-                    TagResolverHelper.createRequestResolver(this)
-            ));
-        }
-        manager.invalidateRequest(requester);
-        return true;
+        return manager.cancelRequest(requester);
     }
 
 
     public boolean isRequesterOnline() {
-        return Bukkit.getPlayer(requester) != null;
+        return Bukkit.getOfflinePlayer(requester).isOnline();
     }
 
 
@@ -65,5 +60,6 @@ public class GameRequest {
         }
         return player;
     }
+
 
 }

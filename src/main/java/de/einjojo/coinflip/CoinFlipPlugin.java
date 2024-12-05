@@ -23,13 +23,14 @@ public class CoinFlipPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        messageManager.loadMessages("de");
         registerListeners();
         registerCommands();
     }
 
     @Override
     public void onDisable() {
-
+        getGameRequestManager().cancelAllRequests();
     }
 
     private void registerCommands() {
