@@ -1,0 +1,27 @@
+[versions]
+cloud = "2.0.0-SNAPSHOT"
+cloud-paper = "2.0.0-SNAPSHOT"
+cloud-annotations = "2.0.0"
+paper = "1.20.4-R0.1-SNAPSHOT"
+lombok = "1.18.34"
+placeholderapi = "2.11.6"
+guava = "33.3.1-jre"
+configurate = "4.1.2"
+vault = "1.7"
+universal-scheduler = "0.1.6"
+
+[libraries]
+vault = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
+cloud-paper = { module = "org.incendo:cloud-paper", version.ref = "cloud-paper" }
+cloud-minecraft-extras = { module = "org.incendo:cloud-minecraft-extras", version.ref = "cloud" }
+cloud-annotations = { module = "org.incendo:cloud-annotations", version.ref = "cloud-annotations" }
+
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
+guava = { module = "com.google.guava:guava", version.ref = "guava" }
+confgurate = { module = "org.spongepowered:configurate-yaml", version.ref = "configurate" }
+universal-scheduler = { module = "com.github.Anon8281:UniversalScheduler", version.ref = "universal-scheduler" }
+
+[bundles]
+cloud = ["cloud-paper", "cloud-minecraft-extras", "cloud-annotations"]
