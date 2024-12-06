@@ -25,11 +25,10 @@ public class CoinFlipPlugin extends JavaPlugin {
     private final GameRequestManager gameRequestManager = new GameRequestManager();
     private final TaskScheduler scheduler = UniversalScheduler.getScheduler(this);
     private final MessageManager messageManager = new MessageManager(this);
-
+    private final ActiveGameManager activeGameManager = new ActiveGameManager(this);
 
     private ConnectionProvider connectionProvider;
     private GameHistoryManager gameHistoryManager;
-    private ActiveGameManager activeGameManager;
 
     @Override
     public void onEnable() {
@@ -39,7 +38,6 @@ public class CoinFlipPlugin extends JavaPlugin {
         SQLHistoryStorage historyStorage = new SQLHistoryStorage(connectionProvider);
         historyStorage.init();
         gameHistoryManager = new GameHistoryManager(historyStorage);
-        activeGameManager = new ActiveGameManager(gameHistoryManager);
         gameHistoryManager.load();
         registerListeners();
         registerCommands();
@@ -49,12 +47,10 @@ public class CoinFlipPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         getGameRequestManager().cancelAllRequests(); // refund
-        if (activeGameManager != null) {
-            for (ActiveGame game : activeGameManager.getActiveGames()) {
-                game.complete();
-            }
-        }
         if (gameHistoryManager != null) {
+            for (ActiveGame game : activeGameManager.getActiveGames()) {
+                game.complete(); // relies on gameHistoryManager
+            }
             gameHistoryManager.updateAll();
         }
     }

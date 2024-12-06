@@ -1,10 +1,18 @@
 package de.einjojo.coinflip.manager;
 
+import de.einjojo.coinflip.CoinFlipPlugin;
 import de.einjojo.coinflip.economy.SimpleEconomy;
+import de.einjojo.coinflip.messages.MessageKey;
 import de.einjojo.coinflip.model.ActiveGame;
 import de.einjojo.coinflip.model.GameException;
 import de.einjojo.coinflip.model.GameRequest;
+import de.einjojo.coinflip.model.GameResult;
+import de.einjojo.coinflip.util.TagResolverHelper;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.LinkedList;
@@ -16,10 +24,10 @@ public class ActiveGameManager {
     @Getter
     private final List<ActiveGame> activeGames = new LinkedList<>();
     @Getter
-    private final GameHistoryManager historyManager;
+    private final CoinFlipPlugin plugin;
 
-    public ActiveGameManager(GameHistoryManager gameHistoryManager) {
-        this.historyManager = gameHistoryManager;
+    public ActiveGameManager(CoinFlipPlugin plugin) {
+        this.plugin = plugin;
     }
 
 
@@ -52,13 +60,38 @@ public class ActiveGameManager {
     public void completeGame(ActiveGame game) {
         if (game.isHostWinner()) {
             economy.deposit(game.getHost(), game.getReward());
+            playWinSound(game.getHost(), game);
+            playFirework(game.getHost());
+            playLooseSound(game.getGuest(), game);
         } else {
             economy.deposit(game.getGuest(), game.getReward());
+            playWinSound(game.getGuest(), game);
+            playFirework(game.getGuest());
+            playLooseSound(game.getHost(), game);
         }
-        getHistoryManager().addToHistories(game);
+        plugin.getGameHistoryManager().addToHistories(game);
         activeGames.remove(game);
         game.setManager(null);
+    }
 
+
+    public void playWinSound(Player player, ActiveGame game) {
+        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.2f);
+        player.sendMessage(MessageKey.GAME__WON.getComponent(
+                TagResolverHelper.createBetPlaceholder(game.getResult()),
+                Placeholder.unparsed("amount", String.valueOf(game.getPartialAmount() * 2))
+        ));
+    }
+
+    public void playLooseSound(Player player, ActiveGame game) {
+        player.playSound(player, Sound.ENTITY_BLAZE_DEATH, 1, 0.8f);
+        player.sendMessage(MessageKey.GAME__LOST.getComponent(
+                TagResolverHelper.createBetPlaceholder(game.getResult().reverse()),
+                Placeholder.unparsed("amount", String.valueOf(game.getPartialAmount() * 2))
+        ));
+    }
+
+    public void playFirework(Player player) {
 
     }
 

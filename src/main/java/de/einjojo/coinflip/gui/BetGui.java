@@ -10,6 +10,7 @@ import de.einjojo.coinflip.model.GameResult;
 import de.einjojo.coinflip.util.ItemBuilder;
 import de.einjojo.coinflip.util.TagResolverHelper;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 public class BetGui extends ChestGui {
@@ -18,7 +19,7 @@ public class BetGui extends ChestGui {
     private final GameRequestManager gameRequestManager;
 
     public BetGui(GameRequestManager gameRequestManager, int betAmount, Player player) {
-        super(3, "Wetten: " + betAmount);
+        super(3, "§7Wetten: §e" + betAmount);
         this.gameRequestManager = gameRequestManager;
         this.betAmount = betAmount;
         this.player = player;
@@ -42,6 +43,7 @@ public class BetGui extends ChestGui {
     }
 
     public void createBet(GameResult result) {
+        player.playSound(player, Sound.UI_BUTTON_CLICK, 1, 1.2f);
         player.closeInventory();
         var request = new GameRequest(
                 player.getUniqueId(),
@@ -53,6 +55,7 @@ public class BetGui extends ChestGui {
             player.sendMessage(MessageKey.REQUEST__CREATED.getComponent(
                     TagResolverHelper.createRequestResolver(request)
             ));
+
         } catch (IllegalStateException ex) {
             player.sendMessage(MessageKey.REQUEST__NOT_CREATED_BECAUSE_ALREADY_EXISTS.getComponent());
         }

@@ -85,9 +85,9 @@ public class ActiveGame {
             counter = 0;
             ticks++;
             if (ticks > (RANDOM.nextInt(5) + 4)) {
-                tickDelay++;
+                tickDelay += RANDOM.nextInt(1) + 1;
             }
-            if (ticks >= (RANDOM.nextInt(8) + 6)) {
+            if (ticks >= (RANDOM.nextInt(5) + 8)) {
                 complete();
                 return;
             }

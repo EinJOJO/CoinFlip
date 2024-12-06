@@ -80,7 +80,9 @@ public class RequestsGUI extends ChestGui {
     }
 
     private GuiItem createBetIcon() {
-        var item = new ItemBuilder(Material.PAPER).setDisplayName(Component.text("Wetten")).build();
+        var item = new ItemBuilder(Material.PAPER)
+                .setLore(MessageKey.REQUEST_GUI__BET__LORE)
+                .setDisplayName(MessageKey.REQUEST_GUI__BET__NAME).build();
         return new GuiItem(item, (e) -> {
             player.closeInventory();
             new PlayerChatInput(CoinFlipPlugin.getInstance(), player, MessageKey.INPUT_TITLE_ENTER_BET.getComponent(), (input -> {
@@ -150,7 +152,11 @@ public class RequestsGUI extends ChestGui {
     }
 
     private GuiItem createBookIcon() {
-        var item = new ItemBuilder(Material.BOOK).setDisplayName(Component.text("Info")).build();
+        var item = new ItemBuilder(Material.BOOK).setDisplayName(Component.text("Info"))
+                .setLore(MessageKey.REQUEST_GUI__INFO_LORE.getList(
+                        TagResolverHelper.createHistoryResolver(
+                                getCoinFlipPlugin().getGameHistoryManager().getGameHistory(player.getUniqueId()))))
+                .build();
         return new GuiItem(item, (event) -> {
             event.getWhoClicked().closeInventory();
             Bukkit.dispatchCommand(event.getWhoClicked(), "coinflip help");

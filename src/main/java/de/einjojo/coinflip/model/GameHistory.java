@@ -18,6 +18,8 @@ public class GameHistory {
     private int lostMoney;
     @Getter
     private int wonMoney;
+    @Getter
+    private Instant lastGame;
 
     public GameHistory(UUID uuid) {
         this.uuid = uuid;
@@ -39,6 +41,13 @@ public class GameHistory {
             wonMoney += entry.amount();
         } else {
             lostMoney += entry.amount();
+        }
+        if (lastGame != null) {
+            if (lastGame.compareTo(entry.timestamp()) < 0) {
+                lastGame = entry.timestamp();
+            }
+        } else {
+            lastGame = entry.timestamp();
         }
         entries.add(entry);
     }
