@@ -9,6 +9,7 @@ import java.util.UUID;
 
 
 public class GameHistory {
+    @Getter
     private final UUID uuid;
     private final LinkedList<Entry> entries = new LinkedList<>();
     private List<Entry> added = new LinkedList<>();

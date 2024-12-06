@@ -22,7 +22,7 @@ public class CFCommand implements CommandExecutor, TabCompleter, SubCommand {
         this.plugin = plugin;
         var helpCommand = new HelpCommand();
         registerSubCommand(helpCommand);
-        registerSubCommand(new StatsCommand());
+        registerSubCommand(new StatsCommand(plugin.getGameHistoryManager()));
         registerSubCommand(new RequestCancelCommand(plugin));
         registerSubCommand(new ReloadCommand(plugin));
         registerSubCommand(new BetCommand(plugin));
