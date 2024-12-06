@@ -87,7 +87,7 @@ public class ActiveGameManager {
         player.playSound(player, Sound.ENTITY_BLAZE_DEATH, 1, 0.8f);
         player.sendMessage(MessageKey.GAME__LOST.getComponent(
                 TagResolverHelper.createBetPlaceholder(game.getResult().reverse()),
-                Placeholder.unparsed("amount", String.valueOf(game.getPartialAmount() * 2))
+                Placeholder.unparsed("amount", String.valueOf(game.getPartialAmount()))
         ));
     }
 

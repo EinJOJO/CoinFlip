@@ -103,13 +103,13 @@ public class ActiveGame {
         }
     }
 
-    public void sendGameTitle(GameResult result) {
+    public void sendGameTitle(GameResult currentResult) {
         if (host.isOnline()) {
-            host.showTitle(getTitle(result));
+            host.showTitle(getTitle(currentResult));
             host.playSound(host, Sound.ENTITY_BAT_TAKEOFF, 1, 1.3f);
         }
         if (guest.isOnline()) {
-            guest.showTitle(getTitle(result));
+            guest.showTitle(getTitle(currentResult));
             host.playSound(host, Sound.ENTITY_BAT_TAKEOFF, 1, 1.3f);
         }
     }
@@ -123,6 +123,7 @@ public class ActiveGame {
             animationCompletionFuture = null;
             animationTask.cancel();
             animationTask = null;
+            sendGameTitle(result);
             if (getManager() != null) {
                 getManager().completeGame(this);
             } else {

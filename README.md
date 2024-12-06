@@ -9,6 +9,7 @@
 - live request-gui updates
 
 ![Request Gui](.github/gui_1.png)
+![Request Gui](.github/gui_2.png)
 
 ### Database
 

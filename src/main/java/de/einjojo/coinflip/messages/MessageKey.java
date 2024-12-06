@@ -50,8 +50,8 @@ public enum MessageKey {
             "",
             "<gray>[Klicke] <yellow>Zeige Hilfestellung an"
     ),
-    GAME__WON("<prefix> <green>Du hast <amount> mit <bet> gewonnen!"),
-    GAME__LOST("<prefix> <red>Du hast -<amount> mit <bet> verloren!");
+    GAME__WON("<prefix><green>Du hast +<amount> mit <bet> gewonnen!"),
+    GAME__LOST("<prefix><red>Du hast -<amount> mit <bet> verloren!");
 
 
     private final String defaultValue;
