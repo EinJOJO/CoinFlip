@@ -43,7 +43,7 @@ public class CFCommand implements CommandExecutor, TabCompleter, SubCommand {
     public void openRequestGUI(CommandSender sender) {
         if (sender instanceof Player player) {
             player.closeInventory();
-            new RequestsGUI(plugin.getGameRequestManager(), player);
+            new RequestsGUI(plugin, player);
         } else {
             sender.sendMessage(MessageKey.COMMAND__REQUIRES_PLAYER.getComponent());
         }

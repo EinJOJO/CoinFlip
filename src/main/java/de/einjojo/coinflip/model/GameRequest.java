@@ -18,6 +18,7 @@ public class GameRequest {
     private final UUID requester;
     private final GameResult bet;
     private final int money;
+    private long createdAt = System.currentTimeMillis();
 
     private transient @Nullable GameRequestManager manager;
 

@@ -26,20 +26,22 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setLore(MessageKey key) {
-        return setLore(key.getList().stream().map((c) -> c.decoration(TextDecoration.ITALIC, false)).toList());
+        return setLore(key.getList());
     }
 
     public ItemBuilder setDisplayName(MessageKey key) {
-        return setDisplayName(key.getComponent().decoration(TextDecoration.ITALIC, false));
+        return setDisplayName(key.getComponent());
     }
 
     public ItemBuilder setLore(List<Component> lore) {
-        this.lore = lore;
+        this.lore = lore.stream()
+                .map((c) -> c.decoration(TextDecoration.ITALIC, false))
+                .toList();
         return this;
     }
 
     public ItemBuilder setDisplayName(Component displayName) {
-        this.displayName = displayName;
+        this.displayName = displayName.decoration(TextDecoration.ITALIC, false);
         return this;
     }
 

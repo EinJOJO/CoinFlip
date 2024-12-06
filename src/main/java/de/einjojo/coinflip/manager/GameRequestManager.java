@@ -1,6 +1,8 @@
 package de.einjojo.coinflip.manager;
 
+import de.einjojo.coinflip.CoinFlipPlugin;
 import de.einjojo.coinflip.economy.SimpleEconomy;
+import de.einjojo.coinflip.gui.RequestsGUI;
 import de.einjojo.coinflip.model.GameRequest;
 import org.bukkit.Bukkit;
 
@@ -31,6 +33,7 @@ public class GameRequestManager {
         economy.withdraw(offlinePlayer, gameRequest.getMoney());
         gameRequest.setManager(this);
         requestMap.put(gameRequest.getRequester(), gameRequest);
+        updateGuis();
     }
 
     /**
@@ -41,16 +44,23 @@ public class GameRequestManager {
     }
 
 
+    public boolean cancelRequest(UUID uuid) {
+        return cancelRequest(uuid, true);
+    }
+
     /**
      * Will refund the betted money
      *
      * @param uuid player
      * @return true if cancelled and refunded
      */
-    public boolean cancelRequest(UUID uuid) {
+    public boolean cancelRequest(UUID uuid, boolean updateGui) {
         var removed = requestMap.remove(uuid);
         if (removed == null) {
             return false;
+        }
+        if (updateGui) {
+            updateGuis();
         }
         economy.deposit(Bukkit.getOfflinePlayer(removed.getRequester()), removed.getMoney());
         removed.setManager(null);
@@ -59,8 +69,9 @@ public class GameRequestManager {
 
     public void cancelAllRequests() {
         for (var entry : requestMap.keySet()) {
-            cancelRequest(entry);
+            cancelRequest(entry, false);
         }
+        updateGuis();
     }
 
     /**
@@ -74,10 +85,28 @@ public class GameRequestManager {
         var removed = requestMap.remove(requester);
         if (removed != null) {
             removed.setManager(null);
+            updateGuis();
             return true;
         }
         return false;
 
+    }
+
+    /**
+     * thread safe
+     */
+    public void updateGuis() {
+        if (Bukkit.isPrimaryThread()) {
+            for (var gui : RequestsGUI.ACTIVE_GUIS) {
+                gui.update();
+            }
+        } else {
+            CoinFlipPlugin.getInstance().getScheduler().runTask(() -> {
+                for (var gui : RequestsGUI.ACTIVE_GUIS) {
+                    gui.update();
+                }
+            });
+        }
     }
 
 }
