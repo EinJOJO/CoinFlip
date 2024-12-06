@@ -12,7 +12,7 @@ public class TagResolverHelper {
 
     public static TagResolver[] createRequestResolver(GameRequest gameRequest) {
         return new TagResolver[]{
-                Placeholder.component("!bet", gameRequest.getBet() == GameResult.HEAD ? MessageKey.TAIL.getComponent() : MessageKey.HEAD.getComponent()),
+                Placeholder.component("anti_bet", gameRequest.getBet() == GameResult.HEAD ? MessageKey.TAIL.getComponent() : MessageKey.HEAD.getComponent()),
                 Placeholder.component("bet", gameRequest.getBet() == GameResult.HEAD ? MessageKey.HEAD.getComponent() : MessageKey.TAIL.getComponent()),
                 Placeholder.unparsed("player", gameRequest.getRequesterPlayer().getName()),
                 Placeholder.unparsed("money", String.valueOf(gameRequest.getMoney())),

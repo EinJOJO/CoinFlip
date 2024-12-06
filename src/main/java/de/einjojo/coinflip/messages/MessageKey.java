@@ -21,16 +21,20 @@ public enum MessageKey {
     REQUEST_GUI__PAGING_ITEM__PREVIOUS_PAGE("<green>Vorherige Seite"),
     REQUEST_GUI__PAGING_ITEM__NEXT_PAGE("<green>Nächste Seite"),
     REQUEST_GUI__REQUEST_ITEM__NAME("<player>"),
-    REQUEST_GUI__REQUEST_ITEM__LORE("<player>", "<amount>", "<bet>"),
-    REQUEST_GUI__REQUEST_ITEM__CLICK_SUGGESTION("[Linksklick] Mit <!bet> die Münze werfen"),
+    REQUEST_GUI__REQUEST_ITEM__LORE("",
+            "<player>",
+            "<amount>",
+            "<bet>"),
+    REQUEST_GUI__REQUEST_ITEM__CLICK_SUGGESTION("[Linksklick] Mit <amount> auf <anti_bet> setzen"),
     NO_GAME_REQUEST("<prefix><red>Du hast keine Coinflip Wette inseriert."),
     INPUT_CANCEL_SUBTITLE("<gray>Gebe <red>cancel</red> in den Chat ein, um abzubrechen."),
     HEAD("<b><yellow>KOPF</yellow></b>"),
     TAIL("<b><#ffffff>Zahl</#ffffff></b>"),
-    INPUT_ENTER_BET("Wettbetrag eingeben"),
-    INPUT_CANCELLED("<prefix>Abgebrochen"),
+    INPUT_TITLE_ENTER_BET("Wettbetrag eingeben"),
+    INPUT_CANCELLED_INFO("<prefix>Abgebrochen"),
     REQUEST__CREATED("<prefix>Du hast eine Wette erstellt und auf <bet> gesetzt"),
-    REQUEST__NOT_CREATED("<prefix><red>Deine Wette konnte nicht gestellt werden: <reason>");
+    REQUEST__NOT_CREATED_BECAUSE_ALREADY_EXISTS("<prefix><red>Du hast bereits eine Wette am laufen."),
+    REQUEST__NOT_CREATED_UNKNOWN("<prefix><red>Deine Wette konnte nicht gestellt werden.");
 
 
     private final String defaultValue;

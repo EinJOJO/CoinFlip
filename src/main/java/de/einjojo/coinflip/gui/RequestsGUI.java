@@ -68,6 +68,10 @@ public class RequestsGUI extends ChestGui {
         super.update();
     }
 
+    public void updateWithoutRepopulate() {
+        super.update();
+    }
+
     private Pane createBackground() {
         OutlinePane background = new OutlinePane(0, 0, 9, 6, Pane.Priority.LOWEST);
         background.addItem(new GuiItem(new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName(Component.text("")).build()));
@@ -79,7 +83,7 @@ public class RequestsGUI extends ChestGui {
         var item = new ItemBuilder(Material.PAPER).setDisplayName(Component.text("Wetten")).build();
         return new GuiItem(item, (e) -> {
             player.closeInventory();
-            new PlayerChatInput(CoinFlipPlugin.getInstance(), player, MessageKey.INPUT_ENTER_BET.getComponent(), (input -> {
+            new PlayerChatInput(CoinFlipPlugin.getInstance(), player, MessageKey.INPUT_TITLE_ENTER_BET.getComponent(), (input -> {
                 Integer parsed = new BetAmountValidator().validateAndParseInput(input, player);
                 if (parsed != null) {
                     new BetGui(getCoinFlipPlugin().getGameRequestManager(), parsed, player);
@@ -155,21 +159,21 @@ public class RequestsGUI extends ChestGui {
 
     private Pane createNavigationBar(PaginatedPane paginatedPane) {
         StaticPane navigation = new StaticPane(0, 5, 9, 1);
-        navigation.addItem(new GuiItem(new ItemBuilder(Material.ARROW).setDisplayName(MessageKey.REQUEST_GUI__PAGING_ITEM__NEXT_PAGE).build(), event -> {
+        navigation.addItem(new GuiItem(new ItemBuilder(Material.ARROW).setDisplayName(MessageKey.REQUEST_GUI__PAGING_ITEM__PREVIOUS_PAGE).build(), event -> {
             if (paginatedPane.getPage() > 0) {
                 paginatedPane.setPage(paginatedPane.getPage() - 1);
 
-                update();
+                updateWithoutRepopulate();
             }
         }), 0, 0);
 
         navigation.addItem(createBookIcon(), 5, 0);
         navigation.addItem(createBetIcon(), 3, 0);
 
-        navigation.addItem(new GuiItem(new ItemBuilder(Material.SPECTRAL_ARROW).setDisplayName(MessageKey.REQUEST_GUI__PAGING_ITEM__PREVIOUS_PAGE).build(), event -> {
+        navigation.addItem(new GuiItem(new ItemBuilder(Material.SPECTRAL_ARROW).setDisplayName(MessageKey.REQUEST_GUI__PAGING_ITEM__NEXT_PAGE).build(), event -> {
             if (paginatedPane.getPage() < paginatedPane.getPages() - 1) {
                 paginatedPane.setPage(paginatedPane.getPage() + 1);
-                update();
+                updateWithoutRepopulate();
             }
         }), 8, 0);
         return navigation;

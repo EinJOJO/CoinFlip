@@ -24,7 +24,6 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.title.Title;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -87,7 +86,7 @@ public class PlayerChatInput implements Listener {
             current.unregister();
             player.playSound(player, Sound.ENTITY_ITEM_BREAK, 1, 1);
             player.clearTitle();
-            player.sendMessage(MessageKey.INPUT_CANCELLED.getComponent());
+            player.sendMessage(MessageKey.INPUT_CANCELLED_INFO.getComponent());
             return;
         }
 

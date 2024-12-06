@@ -54,7 +54,7 @@ public class BetGui extends ChestGui {
                     TagResolverHelper.createRequestResolver(request)
             ));
         } catch (IllegalStateException ex) {
-            player.sendMessage(MessageKey.REQUEST__NOT_CREATED.getComponent());
+            player.sendMessage(MessageKey.REQUEST__NOT_CREATED_BECAUSE_ALREADY_EXISTS.getComponent());
         }
 
 

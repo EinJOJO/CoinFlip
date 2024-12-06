@@ -5,11 +5,8 @@ import de.einjojo.coinflip.model.ActiveGame;
 import de.einjojo.coinflip.model.GameException;
 import de.einjojo.coinflip.model.GameRequest;
 import lombok.Getter;
-import lombok.NonNull;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +15,11 @@ public class ActiveGameManager {
     private final SimpleEconomy economy = SimpleEconomy.create();
     @Getter
     private final List<ActiveGame> activeGames = new LinkedList<>();
+    @Getter
+    private final GameHistoryManager historyManager;
 
-    public ActiveGameManager() {
+    public ActiveGameManager(GameHistoryManager gameHistoryManager) {
+        this.historyManager = gameHistoryManager;
     }
 
 
@@ -55,7 +55,7 @@ public class ActiveGameManager {
         } else {
             economy.deposit(game.getGuest(), game.getReward());
         }
-        //TODO stats
+        getHistoryManager().addToHistories(game);
         activeGames.remove(game);
         game.setManager(null);
 

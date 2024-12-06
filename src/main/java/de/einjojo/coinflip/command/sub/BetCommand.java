@@ -29,7 +29,7 @@ public class BetCommand implements SubCommand {
             return;
         }
         if (args.length == 0) {
-            new PlayerChatInput(plugin, player, MessageKey.INPUT_ENTER_BET.getComponent(), (input) -> {
+            new PlayerChatInput(plugin, player, MessageKey.INPUT_TITLE_ENTER_BET.getComponent(), (input) -> {
                 startBet(player, input);
             });
         } else {

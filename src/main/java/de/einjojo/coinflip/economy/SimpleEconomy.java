@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public interface SimpleEconomy {
-    Logger logger = LoggerFactory.getLogger("ECONOMY");
+    Logger logger = LoggerFactory.getLogger(SimpleEconomy.class);
 
     /**
      * Factory Method
