@@ -25,7 +25,7 @@ public class ReloadCommand implements SubCommand {
             sender.sendRichMessage("<red>please wait until loading is done...");
             return;
         }
-        futureLock = plugin.getMessageManager().loadMessagesAsync("de").whenComplete((success, throwable) -> {
+        futureLock = plugin.getMessageManager().loadMessagesAsync(plugin.getPluginLanguage()).whenComplete((success, throwable) -> {
             if (throwable != null) {
                 sender.sendRichMessage("<red>Fehler beim Neuladen: " + throwable.getMessage());
                 return;

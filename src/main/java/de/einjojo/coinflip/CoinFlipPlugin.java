@@ -13,6 +13,7 @@ import de.einjojo.coinflip.storage.ConnectionProvider;
 import de.einjojo.coinflip.storage.SQLHistoryStorage;
 import de.einjojo.coinflip.storage.SQLLiteConnectionProvider;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,11 +30,13 @@ public class CoinFlipPlugin extends JavaPlugin {
 
     private ConnectionProvider connectionProvider;
     private GameHistoryManager gameHistoryManager;
+    @Setter
+    private String pluginLanguage = "de";
 
     @Override
     public void onEnable() {
         instance = this;
-        messageManager.loadMessages("de");
+        messageManager.loadMessages(getPluginLanguage());
         connectionProvider = new SQLLiteConnectionProvider(this);
         SQLHistoryStorage historyStorage = new SQLHistoryStorage(connectionProvider);
         historyStorage.init();
